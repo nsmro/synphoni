@@ -1,5 +1,4 @@
-
-
+![synphoni_logo](assets/SYNPHONI_logo.png)
 
 # SYNPHONI
 
