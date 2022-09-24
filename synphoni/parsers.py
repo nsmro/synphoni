@@ -13,7 +13,7 @@ def read_orthology(clus_file):
         for line in f:
             og,_, *acc_ls = line.rstrip().split('\t')
             output_dict |= {acc: og for acc in acc_ls}
-    sys.stderr.write(f'Orthology file loaded, {len(output_dict.keys())} OGs found.\n')
+    sys.stderr.write(f'Orthology file loaded, {len(set(output_dict.values()))} OGs found.\n')
     return output_dict
 
 

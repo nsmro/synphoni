@@ -14,9 +14,9 @@ parser = argparse.ArgumentParser(formatter_class = argparse.RawDescriptionHelpFo
     {logo_ASCII()}
     Step 3 of the SYNPHONI (detection of ancestral SYNteny based on PHylogeny and Ortholog Network Inference) pipeline: 
     Infer ancestral microsyntenic orthogroup sets from network built in step 2.
-    Only edges that were microsyntenic in the node will be kept (default: Nmax = 30), 
-    use tools\step2.5_optimal_nmax.py to determine optimal nmax.
-    Only connected components that formed cliques are kept.
+    Only edges that were microsyntenic in the node will be kept (default: nmax = 30), 
+    use tools/step2.5_optimal_nmax.py to determine optimal nmax.
+    Only connected components that consist of cliques are kept.
     """))
 parser.add_argument("node_dist",
                     help = "Name of the node-specific dist file generated with step 2")

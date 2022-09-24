@@ -33,11 +33,11 @@ parser.add_argument("-s", "--min_shared",
                     default = .5,
                     type = float)
 parser.add_argument("-k", "--clique_size",
-                    help = "how many links a block should have to other blocks to be retained. k = num_links + 1. Default is k = 3",
+                    help = "how many blocks a multi species block should have to be retained (use to percolate k cliques of extant blocks). Default is k = 3",
                     default = 3,
                     type = int)
 parser.add_argument("-r", "--min_community_coverage",
-                    help = "percentage of orthogroups of the original community a block should posess, default is .3, i.e. 30%",
+                    help = "percentage of orthogroups of the original OG community a block should posess, default is .3, i.e. 30%",
                     default = .3,
                     type = float)
 parser.add_argument("-o", "--output",

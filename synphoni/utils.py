@@ -196,9 +196,9 @@ def get_threshold(species_threshold, chromfiles_list):
     :return: an integer
     """
     nb_species = len(chromfiles_list)
-    if 2 > species_threshold:
+    if 1 > species_threshold:
         sys.stderr.write(f'WARNING: species_threshold < 2. threshold will be changed to 2\n')
-        species_threshold = 2
+        species_threshold = 1
     elif species_threshold > nb_species:
         sys.stderr.write(f'WARNING: species_threshold > total number of species. threshold will be changed to {nb_species}\n')
         species_threshold = nb_species
@@ -295,3 +295,13 @@ def get_min_distances_pair(og_pair, chrom_data, min_threshold, chromfiles_ls):
         return [ogx, ogy] + dist_ls
 
 
+def window(seq, n = 2):
+    """Returns a sliding window (of width n) over data from the iterable
+    s -> (s0,s1,...s[n-1]), (s1,s2,...,sn), ..."""
+    it = iter(seq)
+    result = tuple(itertools.islice(it, n))
+    if len(result) == n:
+        yield result
+    for elem in it:
+        result = result[1:] + (elem,)
+        yield result

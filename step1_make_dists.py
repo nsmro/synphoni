@@ -45,7 +45,7 @@ parser.add_argument("-m",
 parser.add_argument("-s",
                     "--species_threshold",
                     help = "minimum number of species where orthoghroup pair needs to be syntenic for being retained\
-                        since this step is the longest, this parameter shouldn't be touched and stringency \
+                        since this step is the longest, this parameter should be set at 2 and stringency \
                             on block detection should rely on parameters ar other steps\
                         (default: 2)",
                     type = int,
