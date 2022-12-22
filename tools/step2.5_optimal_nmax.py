@@ -91,7 +91,7 @@ def files_to_process(input_dir):
     folder = Path(input_dir)
     node_ls = [x.stem for x in folder.glob("*")]
     for node in node_ls:
-        m_ls = [x.stem for x in (folder / "Parahoxozoa").glob("*")]
+        m_ls = [x.stem for x in (folder / node).glob("*")]
         for m_folder in m_ls:
             m = m_folder.split("_")[1]
             filepath = get_dist(folder, node, m_folder)
