@@ -6,7 +6,7 @@ import textwrap
 import networkx as nx
 import synphoni.graph_analysis as sg
 from synphoni.logo import logo_ASCII
-
+import pickle
 
 parser = argparse.ArgumentParser(formatter_class = argparse.RawDescriptionHelpFormatter,
                                  description = textwrap.dedent(f"""\
@@ -37,7 +37,9 @@ edgelist, edgelist_filt = sg.load_edgelist(args.node_dist, args.nmax)
 G = sg.weighted_edgelist_to_graph(edgelist)
 G_filt = sg.weighted_edgelist_to_graph(edgelist_filt)
 
-nx.write_gpickle(G_filt, f"{args.output}.gpickle")
+with open(f"{args.output}.gpickle", "wb") as fhout:
+    pickle.dump(G_filt, fhout, pickle.HIGHEST_PROTOCOL)
+
 
 with open(f"{args.output}.csv", 'w') as f:
     outputcsv = csv.writer(f)

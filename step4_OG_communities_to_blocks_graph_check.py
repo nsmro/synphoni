@@ -7,6 +7,7 @@ import textwrap
 import synphoni.utils as su
 import synphoni.graph_analysis as sg
 from synphoni.logo import logo_ASCII
+import pickle
 
 parser = argparse.ArgumentParser(formatter_class = argparse.RawDescriptionHelpFormatter,
                                  description = textwrap.dedent(f"""\
@@ -47,7 +48,8 @@ parser.add_argument("-o", "--output",
 args = parser.parse_args()
 
 
-G_og = nx.read_gpickle(args.filtered_graph)
+with open(args.filtered_graph, "rb") as fhin:
+    G_og = pickle.load(fhin)
 
 chrom_dict = su.load_chrom_data(filepath = args.chrom_data)
 
