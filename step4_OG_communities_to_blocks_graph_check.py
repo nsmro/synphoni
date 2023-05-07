@@ -38,7 +38,7 @@ parser.add_argument("-k", "--clique_size",
                     default = 3,
                     type = int)
 parser.add_argument("-r", "--min_community_coverage",
-                    help = "percentage of orthogroups of the original OG community a block should posess, default is .3, i.e. 30%",
+                    help = "percentage of orthogroups of the original OG community a block should posess, default is .3, i.e. 30 percent",
                     default = .3,
                     type = float)
 parser.add_argument("-m", "--chrom_clustering_method",
