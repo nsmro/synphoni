@@ -204,8 +204,11 @@ def write_blocks(blocks_writer,
     block_id_dict = {}        
     if method == "k_clique":
         block_clusters = k_clique_communities(og_info_graph, k_perco)
-    elif method == "leiden":
-        block_clusters = leiden_commus(og_info_graph, k_perco)
+    elif method == "leiden":#size based
+        if len(og_info_graph) >20:
+            block_clusters = leiden_commus(og_info_graph, k_perco)
+        else:
+            block_clusters = k_clique_communities(og_info_graph, k_perco)
     for block_cluster in block_clusters:
         if len(known_dict.keys()) == 0 and len(block_id_dict.keys()) == 0:
             multi_sp_id = 1
