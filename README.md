@@ -231,13 +231,13 @@ This is a final validation step that verifies whether the taxonomic composition/
 ##### Command for example data using the [BlocksByNode.py](https://github.com/nsmro/comparative_genomics_utils/blob/main/Microsynteny/BlocksByNode.py) script
 
 ```bash
-BlocksByNode.py -c myresults/example_blocks.len3.ol0.5.clusters -b myresults/example_blocks.len3.ol0.5.synt -s example_data/dataset_test.tre -n Nephrozoa -m 3 -r blocks_list -t total > myresults/example_blocks.len3.ol0.5.taxonomy_filtered.synt
+BlocksByNode.py -c myresults/example_blocks.len3.ol0.5.clusters -b myresults/example_blocks.len3.ol0.5.synt -s example_data/dataset_test.tre -n Nephrozoa -m 3 -r blocks_list -t total | cut -f2- > myresults/example_blocks.len3.ol0.5.taxonomy_filtered.synt
 ```
 
 This command creates a new **synt** file containing the validated species blocks. 
 
 ```bash
-BlocksByNode.py -c myresults/example_blocks.len3.ol0.5.clusters -b myresults/example_blocks.len3.ol0.5.synt -s example_data/dataset_test.tre -n Nephrozoa -m 3 -r clusters_list -t total | cut -f 12,4- > myresults/example_blocks.len3.ol0.5.taxonomy_filtered.clusters
+BlocksByNode.py -c myresults/example_blocks.len3.ol0.5.clusters -b myresults/example_blocks.len3.ol0.5.synt -s example_data/dataset_test.tre -n Nephrozoa -m 3 -r clusters_list -t total | cut -f 1,2,4- > myresults/example_blocks.len3.ol0.5.taxonomy_filtered.clusters
 ```
 
 This command creates a new **clusters** file containing the validated multi-species blocks. 
