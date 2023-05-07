@@ -4,7 +4,7 @@ import itertools
 import csv
 import synphoni.utils as su
 from networkx.algorithms.community import k_clique_communities
-
+from cdlib.algorithms import leiden
 
 def load_edgelist(filepath, nmax):
     """load_edgelist for a file
@@ -162,12 +162,28 @@ def og_info_to_graph(genome_location_orthogroups, fullgraph_ogs_filt, min_len = 
         return G
 
 
+def leiden_commus(protoblock_graph, min_size):
+    """get_leiden_commus out of a graph
+
+    :param protoblock_graph: a graph
+    :return: a generator of sets
+    """
+    map_to_int = {name:idx for idx,name in enumerate(protoblock_graph.nodes)}
+    rev_map = {v:k for k,v in map_to_int.items()}
+    protoblock_graph_idx = nx.relabel_nodes(protoblock_graph, map_to_int)
+    leiden_coms = leiden(protoblock_graph_idx)
+    for commu_idx in leiden_coms.communities:
+        if len(commu_idx) >= min_size:
+            yield [rev_map[idx] for idx in commu_idx]
+
+
 def write_blocks(blocks_writer,
                  multi_sp_writer,
                  genome_location_ogs_dict,
                  og_info_graph,
                  k_perco,
-                 known_dict):
+                 known_dict,
+                 method):
     """
     write block information specified to a file
     takes as input a scaffold graph (og_info_graph) and the info about the gene it bears
@@ -181,13 +197,16 @@ def write_blocks(blocks_writer,
     :param multi_sp_writer: csv writer object writing to multi sp information
     :param genome_location_ogs_dict: dictionary, output of genome_location_ogs function
     :param og_info_graph: nx.Graph object, output of og_info_to_graph
-    :param k_perco: size of teh clique to use for percolation
+    :param k_perco: size of the clique to use for percolation, only used if method == "k_clique",
+    :param method: method to use for clusering scaffolds : choices = {"k_clique","leiden"}
     :returns: block_id dict
     """
     block_id_dict = {}        
-    block_clusters = list(k_clique_communities(og_info_graph, k_perco))
-    block_clusters = sorted(block_clusters, key = lambda x: len(x), reverse = True)
-    for block_cluster in k_clique_communities(og_info_graph, k_perco):
+    if method == "k_clique":
+        block_clusters = k_clique_communities(og_info_graph, k_perco)
+    elif method == "leiden":
+        block_clusters = leiden_commus(og_info_graph, k_perco)
+    for block_cluster in block_clusters:
         if len(known_dict.keys()) == 0 and len(block_id_dict.keys()) == 0:
             multi_sp_id = 1
             block_id = 0

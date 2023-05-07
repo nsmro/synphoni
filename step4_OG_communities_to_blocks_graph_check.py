@@ -41,6 +41,11 @@ parser.add_argument("-r", "--min_community_coverage",
                     help = "percentage of orthogroups of the original OG community a block should posess, default is .3, i.e. 30%",
                     default = .3,
                     type = float)
+parser.add_argument("-m", "--chrom_clustering_method",
+                    help = "Scaffold are grouped together to verify that they are homologs. Clique checking step of the synphoni algorithm.",
+                    default = "k_clique",
+                    choices = {"k_clique", "leiden"},
+                    type = str)
 parser.add_argument("-o", "--output",
                     help = "Prefix of the synt and clusters output files",
                     type = str,
@@ -84,10 +89,10 @@ with open(synt_path, "w") as synt_h, open(multi_sp_path, "w") as multi_sp_h:
                                                min_len = args.min_len,
                                                min_shared = args.min_shared)
         if protoblock_graph != None:
-            block_ids |= sg.write_blocks(synt_w,
-                                         m_sp_w,
-                                         current_commu_scaffolds,
-                                         protoblock_graph,
-                                         args.clique_size,
-                                         block_ids)
-
+            block_ids |= sg.write_blocks(blocks_writer = synt_w,
+                                         multi_sp_writer = m_sp_w,
+                                         genome_location_ogs_dict = current_commu_scaffolds,
+                                         og_info_graph = protoblock_graph,
+                                         k_perco = args.clique_size,
+                                         known_dict = block_ids,
+                                         method = args.chrom_clustering_method)
